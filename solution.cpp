@@ -1,6 +1,7 @@
 #include <iostream>
-#include <map>
+#include <unordered_map>
 #include <set>
+#define  dictionary unordered_map <string,set<string>>
 
 using namespace std;
 
@@ -24,17 +25,18 @@ int count_upper_case(string s)
     }
     return count;
 }
-bool check_word(string temp,map <string,set<string> > &m)
+
+bool check_word(string temp,dictionary &m)
 {
-    string lower;
-    lower = to_lower(temp);
-    map <string,set<string>>::iterator it;
-    return ((it = m.find(lower)) != m.end() && it->second.find(temp) == it->second.end()) || (count_upper_case(temp) != 1);
+    
+    string lower = to_lower(temp);
+    auto it = m.find(lower);
+    return it != m.end() && it->second.find(temp) == it->second.end() || count_upper_case(temp) != 1;
 }
 
 int main()
 {
-    map <string,set<string> > m;
+    dictionary m;
     int n,count = 0,prev_pos = 0;
     string s,temp;
 
