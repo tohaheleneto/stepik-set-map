@@ -1,9 +1,9 @@
 #include <iostream>
 #include <unordered_map>
-#include <set>
-#define  dictionary unordered_map <string,set<string>>
+#include <unordered_set>
 
 using namespace std;
+using dictionary = unordered_map <string, unordered_set<string>>;
 
 string to_lower(string t)
 {
@@ -26,12 +26,12 @@ int count_upper_case(string s)
     return count;
 }
 
-bool check_word(string temp,dictionary &m)
+bool check_word(string const & temp,dictionary const &m)
 {
-    
-    string lower = to_lower(temp);
-    auto it = m.find(lower);
-    return it != m.end() && it->second.find(temp) == it->second.end() || count_upper_case(temp) != 1;
+    auto it = m.find(to_lower(temp));
+    return  it != m.end()
+                ? it->second.find(temp) == it->second.end()
+                : count_upper_case(temp) != 1;
 }
 
 int main()
@@ -46,7 +46,7 @@ int main()
     {
         cin >> s;
         string lower = to_lower(s);
-        m.insert(pair<string,set <string> >(lower,set<string>()));
+        m.insert(pair<string,unordered_set <string> >(lower,unordered_set<string>()));
         m[lower].insert(s);
     }
 
